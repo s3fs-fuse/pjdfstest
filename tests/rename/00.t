@@ -25,15 +25,8 @@ for type in regular fifo block char socket; do
 	expect 0 rename ${n0} ${n1}
 	expect ENOENT lstat ${n0} type,mode,nlink
 	expect ${type},${inode},0644,1 lstat ${n1} type,inode,mode,nlink
-	expect 0 link ${n1} ${n0}
-	expect ${type},${inode},0644,2 lstat ${n0} type,inode,mode,nlink
-	expect ${type},${inode},0644,2 lstat ${n1} type,inode,mode,nlink
 	expect 0 rename ${n1} ${n2}
-	expect ${type},${inode},0644,2 lstat ${n0} type,inode,mode,nlink
 	expect ENOENT lstat ${n1} type,mode,nlink
-	expect ${type},${inode},0644,2 lstat ${n2} type,inode,mode,nlink
-	expect 0 unlink ${n0}
-	expect 0 unlink ${n2}
 done
 
 expect 0 mkdir ${n0} 0755

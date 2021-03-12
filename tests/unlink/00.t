@@ -47,52 +47,6 @@ expect socket lstat ${n0} type
 expect 0 unlink ${n0}
 expect ENOENT lstat ${n0} type
 
-# successful unlink(2) updates ctime.
-expect 0 create ${n0} 0644
-expect 0 link ${n0} ${n1}
-ctime1=`${fstest} stat ${n0} ctime`
-sleep 1
-expect 0 unlink ${n1}
-ctime2=`${fstest} stat ${n0} ctime`
-test_check $ctime1 -lt $ctime2
-expect 0 unlink ${n0}
-
-expect 0 mkfifo ${n0} 0644
-expect 0 link ${n0} ${n1}
-ctime1=`${fstest} stat ${n0} ctime`
-sleep 1
-expect 0 unlink ${n1}
-ctime2=`${fstest} stat ${n0} ctime`
-test_check $ctime1 -lt $ctime2
-expect 0 unlink ${n0}
-
-expect 0 mknod ${n0} b 0644 1 2
-expect 0 link ${n0} ${n1}
-ctime1=`${fstest} stat ${n0} ctime`
-sleep 1
-expect 0 unlink ${n1}
-ctime2=`${fstest} stat ${n0} ctime`
-test_check $ctime1 -lt $ctime2
-expect 0 unlink ${n0}
-
-expect 0 mknod ${n0} c 0644 1 2
-expect 0 link ${n0} ${n1}
-ctime1=`${fstest} stat ${n0} ctime`
-sleep 1
-expect 0 unlink ${n1}
-ctime2=`${fstest} stat ${n0} ctime`
-test_check $ctime1 -lt $ctime2
-expect 0 unlink ${n0}
-
-expect 0 bind ${n0}
-expect 0 link ${n0} ${n1}
-ctime1=`${fstest} stat ${n0} ctime`
-sleep 1
-expect 0 unlink ${n1}
-ctime2=`${fstest} stat ${n0} ctime`
-test_check $ctime1 -lt $ctime2
-expect 0 unlink ${n0}
-
 # unsuccessful unlink(2) does not update ctime.
 expect 0 create ${n0} 0644
 ctime1=`${fstest} stat ${n0} ctime`
@@ -199,15 +153,6 @@ test_check $time -lt $mtime
 ctime=`${fstest} stat ${n0} ctime`
 test_check $time -lt $ctime
 expect 0 rmdir ${n0}
-
-expect 0 create ${n0} 0644
-expect 0 link ${n0} ${n1}
-time=`${fstest} stat ${n0} ctime`
-sleep 1
-expect 0 unlink ${n1}
-ctime=`${fstest} stat ${n0} ctime`
-test_check $time -lt $ctime
-expect 0 unlink ${n0}
 
 cd ${cdir}
 expect 0 rmdir ${n2}
