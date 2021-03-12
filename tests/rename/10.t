@@ -25,13 +25,13 @@ expect 0 chown ${n0} 65534 65534
 expect 0 mkdir ${n1} 0755
 expect 0 chmod ${n1} 01777
 
-for type in regular fifo block char socket symlink; do
+for type in regular fifo socket symlink; do
 	# User owns both: the sticky directory and the destination file.
 	expect 0 chown ${n1} 65534 65534
 	create_file ${type} ${n0}/${n2} 65534 65534
 	inode=`${fstest} lstat ${n0}/${n2} inode`
 
-	for type in regular fifo block char socket symlink; do
+	for type in regular fifo socket symlink; do
 		create_file ${type} ${n1}/${n3} 65534 65534
 		expect 0 -u 65534 -g 65534 rename ${n0}/${n2} ${n1}/${n3}
 		expect ENOENT lstat ${n0}/${n2} inode
@@ -49,7 +49,7 @@ for type in regular fifo block char socket symlink; do
 		create_file ${type} ${n0}/${n2} 65534 65534
 		inode=`${fstest} lstat ${n0}/${n2} inode`
 
-		for type in regular fifo block char socket symlink; do
+		for type in regular fifo socket symlink; do
 			create_file ${type} ${n1}/${n3} ${id} ${id}
 			expect 0 -u 65534 -g 65534 rename ${n0}/${n2} ${n1}/${n3}
 			expect ENOENT lstat ${n0}/${n2} inode
@@ -68,7 +68,7 @@ for type in regular fifo block char socket symlink; do
 		create_file ${type} ${n0}/${n2} 65534 65534
 		inode=`${fstest} lstat ${n0}/${n2} inode`
 
-		for type in regular fifo block char socket symlink; do
+		for type in regular fifo socket symlink; do
 			create_file ${type} ${n1}/${n3} 65534 65534
 			expect 0 -u 65534 -g 65534 rename ${n0}/${n2} ${n1}/${n3}
 			expect ENOENT lstat ${n0}/${n2} inode
@@ -87,7 +87,7 @@ for type in regular fifo block char socket symlink; do
 		create_file ${type} ${n0}/${n2} 65534 65534
 		inode=`${fstest} lstat ${n0}/${n2} inode`
 
-		for type in regular fifo block char socket symlink; do
+		for type in regular fifo socket symlink; do
 			create_file ${type} ${n1}/${n3} ${id} ${id}
 			expect "EACCES|EPERM" -u 65534 -g 65534 rename ${n0}/${n2} ${n1}/${n3}
 			expect ${inode} lstat ${n0}/${n2} inode

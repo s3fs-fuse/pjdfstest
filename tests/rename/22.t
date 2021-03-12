@@ -20,7 +20,7 @@ cdir=`pwd`
 cd ${parent}
 
 # successful rename(2) updates ctime.
-for type in regular dir fifo block char socket symlink; do
+for type in regular dir fifo socket symlink; do
 	create_file ${type} ${src}
 	ctime1=`${fstest} lstat ${src} ctime`
 	sleep 1

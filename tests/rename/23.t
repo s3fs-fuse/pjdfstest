@@ -18,7 +18,7 @@ expect 0 mkdir ${parent} 0755
 cdir=`pwd`
 cd ${parent}
 
-for type in regular fifo block char socket; do
+for type in regular fifo socket; do
 	create_file ${type} ${src}
 	create_file ${type} ${dst}
 	expect 0 link ${dst} ${dstlnk}

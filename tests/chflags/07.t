@@ -19,7 +19,7 @@ expect 0 mkdir ${n0} 0755
 cdir=`pwd`
 cd ${n0}
 
-for type in regular dir fifo block char socket symlink; do
+for type in regular dir fifo socket symlink; do
 	if [ "${type}" != "symlink" ]; then
 		create_file ${type} ${n1}
 		expect EPERM -u 65534 -g 65534 chflags ${n1} UF_NODUMP

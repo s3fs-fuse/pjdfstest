@@ -13,7 +13,7 @@ n0=`namegen`
 n1=`namegen`
 
 expect 0 mkdir ${n0} 0755
-for type in regular dir fifo block char socket symlink; do
+for type in regular dir fifo socket symlink; do
 	create_file ${type} ${n0}/${n1}
 	expect "EEXIST|ENOTEMPTY" rmdir ${n0}
 	if [ "${type}" = "dir" ]; then

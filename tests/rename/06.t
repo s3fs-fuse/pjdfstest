@@ -25,7 +25,7 @@ esac
 n0=`namegen`
 n1=`namegen`
 
-for type in regular dir fifo block char socket symlink; do
+for type in regular dir fifo socket symlink; do
 	if [ "${type}" != "symlink" ]; then
 		create_file ${type} ${n0}
 		for flag in ${flags}; do
